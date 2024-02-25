@@ -7,7 +7,7 @@
 ## Usage
 
 ```shell
-pip install -r requirements
+pip install -r requirements.txt
 # Example:
 # For "https://www.vice.com/it/contributor/federico-nejrotti"
 # Use "federico-nejrotti" as argument
@@ -19,4 +19,8 @@ python vice-download.py federico-nejrotti
 ```txt
 There are 684 articles in memory
 List of all articles saved in file 'articoli.txt'
+
+Saving article: TITLE 1
+Saving article: TITLE 2
+...
 ```
