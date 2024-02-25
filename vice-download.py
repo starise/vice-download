@@ -10,6 +10,7 @@ PAGES_CLASS = "pagination_pager__progress-last-page"
 CONTENT_CLASS = "article__body-components"
 TITLE_CLASS = "smart-header__hed"
 DATE_CLASS = "article__header__datebar__date--original"
+CONTRIB_CLASS = "contributor__meta"
 ARTICLES_FILENAME = "articles.txt"
 ARTICLES_FOLDERNAME = "articles/"
 
@@ -40,9 +41,11 @@ def html_to_markdown(url):
     soup = BeautifulSoup(response.text, "html.parser")
     title = soup.find("h1")
     date = soup.find("div", class_= DATE_CLASS)
+    contrib = soup.find_all("div", class_= CONTRIB_CLASS)
     article = soup.find("div", class_= CONTENT_CLASS)
+    heading = str(title) + str(date) + " " + str(contrib) + "<hr>"
     md_filename = url.split("/")[-1] + ".md"
-    markdown_content = md(str(title) + str(date) + "<hr>" + str(article))
+    markdown_content = md(heading + str(article))
     folder_name = ARTICLES_FOLDERNAME
 
     if not os.path.exists(folder_name): 
@@ -54,7 +57,7 @@ def html_to_markdown(url):
         print("Saving article: " + title.get_text())
         file.write(markdown_content)
 
-save_articles_list()
+#save_articles_list()
 
 def save_as_markdown():
     with open(ARTICLES_FILENAME, "r") as file:
