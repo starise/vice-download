@@ -3,7 +3,6 @@ import sys
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
 
-
 CONTRIBUTOR = "".join(sys.argv[1:])
 
 # Find links to all articles
@@ -19,12 +18,12 @@ def save_articles_list():
     author_articles = []
     for page in range(1, int(pages) + 1):
         for link in links:
-            author_articles.append(link["href"])
+            author_articles.append("https://www.vice.com" + link["href"])
 
     print("There are " + str(len(author_articles)) + " articles in memory")
 
-    with open("articoli.txt", "w") as f:
-        f.write("\n".join(map(str, author_articles)))
+    with open("articoli.txt", "w") as file:
+        file.write("\n".join(map(str, author_articles)))
 
     print("List of all articles saved in file 'articoli.txt'")
 
