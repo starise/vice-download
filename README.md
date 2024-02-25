@@ -6,7 +6,7 @@
 
 ## Usage
 
-```python
+```shell
 pip install -r requirements
 # Example:
 # For "https://www.vice.com/it/contributor/federico-nejrotti"
