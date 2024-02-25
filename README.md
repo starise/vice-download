@@ -20,6 +20,8 @@ python vice-download.py federico-nejrotti
 There are 684 articles in memory
 List of all articles saved in file 'articoli.txt'
 
+Save all articles as markdown files? (yes/no): yes
+
 Saving article: TITLE 1
 Saving article: TITLE 2
 ...
