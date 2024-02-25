@@ -10,6 +10,8 @@ PAGES_CLASS = "pagination_pager__progress-last-page"
 CONTENT_CLASS = "article__body-components"
 TITLE_CLASS = "smart-header__hed"
 DATE_CLASS = "article__header__datebar__date--original"
+ARTICLES_FILENAME = "articles.txt"
+ARTICLES_FOLDERNAME = "articles/"
 
 # Find links to all articles
 author_page = "https://www.vice.com/it/contributor/" + CONTRIBUTOR
@@ -28,10 +30,10 @@ def save_articles_list():
 
     print("There are " + str(len(author_articles)) + " articles in memory")
 
-    with open("articoli.txt", "w") as file:
+    with open(ARTICLES_FILENAME, "w") as file:
         file.write("\n".join(map(str, author_articles)))
 
-    print("List of all articles saved in file 'articoli.txt'")
+    print("List of all articles saved in file " + ARTICLES_FILENAME)
 
 def html_to_markdown(url):
     response = requests.get(url)
@@ -41,7 +43,7 @@ def html_to_markdown(url):
     article = soup.find("div", class_= CONTENT_CLASS)
     md_filename = url.split("/")[-1] + ".md"
     markdown_content = md(str(title) + str(date) + "<hr>" + str(article))
-    folder_name = "articles/"
+    folder_name = ARTICLES_FOLDERNAME
 
     if not os.path.exists(folder_name): 
         os.makedirs(folder_name)
@@ -55,7 +57,7 @@ def html_to_markdown(url):
 save_articles_list()
 
 def save_as_markdown():
-    with open("articoli.txt", "r") as file:
+    with open(ARTICLES_FILENAME, "r") as file:
         urls = file.readlines()
 
     for url in urls:
