@@ -57,8 +57,6 @@ def html_to_markdown(url):
         print("Saving article: " + title.get_text())
         file.write(markdown_content)
 
-#save_articles_list()
-
 def save_as_markdown():
     with open(ARTICLES_FILENAME, "r") as file:
         urls = file.readlines()
@@ -66,6 +64,8 @@ def save_as_markdown():
     for url in urls:
         url = url.strip()
         html_to_markdown(url)
+
+save_articles_list()
 
 user_input = input("Save all articles as markdown files? (yes/no): ")
 
