@@ -33,30 +33,36 @@ def save_articles_list():
 
     print("List of all articles saved in file 'articoli.txt'")
 
-def html_to_markdown(title, date, article):
+def html_to_markdown(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+    title = soup.find("h1")
+    date = soup.find("div", class_= DATE_CLASS)
+    article = soup.find("div", class_= CONTENT_CLASS)
     md_filename = url.split("/")[-1] + ".md"
     markdown_content = md(str(title) + str(date) + "<hr>" + str(article))
     folder_name = "articles/"
+
     if not os.path.exists(folder_name): 
         os.makedirs(folder_name)
     
     output_path = folder_name + md_filename
 
-    with open(output_path, "w", encoding='utf-8') as f:
-        f.write(markdown_content)
+    with open(output_path, "w", encoding="utf-8") as file:
+        print("Saving article: " + title.get_text())
+        file.write(markdown_content)
 
 save_articles_list()
 
-# Leggi l'elenco delle pagine web remote dal file TXT
-with open("articoli.txt", "r") as file:
-    urls = file.readlines()
+def save_as_markdown():
+    with open("articoli.txt", "r") as file:
+        urls = file.readlines()
 
-for url in urls:
-    url = url.strip()  # Rimuovi spazi e newline
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, "html.parser")
-    article_title = soup.find("h1")
-    article_date = soup.find("div", class_= DATE_CLASS)
-    print("Saving article: " + article_title.get_text())
-    article_html = soup.find("div", class_= CONTENT_CLASS)
-    html_to_markdown(article_title, article_date, article_html)
+    for url in urls:
+        url = url.strip()
+        html_to_markdown(url)
+
+user_input = input("Save all articles as markdown files? (yes/no): ")
+
+if user_input.lower() == "yes":
+    save_as_markdown()
